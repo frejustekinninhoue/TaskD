@@ -1,0 +1,42 @@
+# créer un fichier docker-compose.yml à la racine du projet pour lancer PostgreSQL proprement
+## La ligne ./migrations:/docker-entrypoint-initdb.d permet à PostgreSQL d'exécuter automatiquement notre script SQL dès son premier démarrage !
+
+# services:
+#   postgres:
+#     image: postgres:16-alpine
+#     container_name: taskd-postgres
+#     environment:
+#       POSTGRES_USER: postgres
+#       POSTGRES_PASSWORD: postgres
+#       POSTGRES_DB: taskd
+#     ports:
+#       - '5432:5432'
+#     volumes:
+#       - pgdata:/var/lib/postgresql/data
+#       - ./migrations:/docker-entrypoint-initdb.d
+# 
+# volumes:
+#   pgdata:
+
+services:
+  postgres:
+    image: postgres:18-alpine
+    container_name: taskd-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: taskd
+      POSTGRES_PASSWORD: taskd_dev_password
+      POSTGRES_DB: taskd
+    ports:
+      - '5432:5432'
+    volumes:
+      - taskd-pgdata:/var/lib/postgresql
+      - ./migrations:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U taskd -d taskd']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  taskd-pgdata:
