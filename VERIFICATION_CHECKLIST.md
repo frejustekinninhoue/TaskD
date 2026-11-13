@@ -35,7 +35,7 @@ make dev
 [Nest] ... LOG [NestApplication] Nest application successfully started
 ```
 
-*(Ouvre un second terminal à la racine `~/Documents/identity-service` pour exécuter tous les blocs suivants).*
+*(Ouvrir un second terminal à la racine `~/Documents/identity-service` pour exécuter tous les blocs suivants).*
 
 ---
 
